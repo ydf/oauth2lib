@@ -2,12 +2,19 @@
 
 from oauth2lib.client import Client
 import urllib
-client_id = '219866860'
-client_secret = 'e7223b9c0d304ef1f608d205885de632'
-redirect_uri = 'http://yun.peopledu.tk/callback'
-authorization_uri = 'https://api.weibo.com/oauth2/authorize'
-token_uri = 'https://api.weibo.com/oauth2/access_token'
+# client_id = '219866860'
+# client_secret = 'e7223b9c0d304ef1f608d205885de632'
+# redirect_uri = 'http://yun.peopledu.tk/callback'
+# authorization_uri = 'https://api.weibo.com/oauth2/authorize'
+# token_uri = 'https://api.weibo.com/oauth2/access_token'
 
+
+
+client_id = '123'
+client_secret = '123'
+redirect_uri = 'http://qq.com/callback'
+authorization_uri = 'http://127.0.0.1:8000/authorize'
+token_uri = 'https://api.weibo.com/oauth2/access_token'
 
 sina_oauth = Client(client_id, client_secret,
                     redirect_uri, authorization_uri, token_uri)

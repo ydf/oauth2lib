@@ -18,8 +18,9 @@ class Provider(object):
         :param exc: Exception to process.
         :type exc: Exception
         """
-        logger = logging.getLogger(__name__)
-        logger.exception(exc)
+        # logger = logging.getLogger(__name__)
+        # logger.exception(exc)
+        pass
 
     def _make_response(self, body='', headers=None, status_code=200):
         """Return a response object from the given parameters.
@@ -250,6 +251,7 @@ class AuthorizationProvider(Provider):
 
         # Generate authorization code
         code = self.generate_authorization_code()
+        print code
 
         # Save information to be used to validate later requests
         self.persist_authorization_code(client_id=client_id,
@@ -419,6 +421,7 @@ class AuthorizationProvider(Provider):
         :rtype: requests.Response
         """
         params = utils.url_query_params(uri)
+        print self.get_authorization_code(**params)
         try:
             if 'response_type' not in params:
                 raise TypeError('Missing parameter response_type in URL query')

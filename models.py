@@ -8,23 +8,25 @@
 # into your database.
 
 from django.db import models
+from django.conf import settings
 
+# class UserData(models.Model):
+#     user_name = models.CharField(max_length=255, unique=True)
+#     user_email = models.CharField(max_length=255, unique=True, db_index=True)
+#     user_mobile = models.IntegerField(
+#         max_length=300, unique=True, db_index=True)
+#     register_time = models.DateTimeField(
+#         null=True, blank=True, auto_now_add=True)
 
-class UserData(models.Model):
-    user_name = models.CharField(max_length=255, unique=True)
-    user_email = models.CharField(max_length=255, unique=True, db_index=True)
-    user_mobile = models.IntegerField(
-        max_length=300, unique=True, db_index=True)
-    register_time = models.DateTimeField(
-        null=True, blank=True, auto_now_add=True)
+#     class Meta:
+#         db_table = u'userdb'
 
-    class Meta:
-        db_table = u'userdb'
+AUTH_USER = getattr(settings, 'AUTH_USER_MODEL', 'auth.User')
 
 
 class ClientId(models.Model):
     client_id = models.CharField(max_length=255, primary_key=True)
-    user_id = models.ForeignKey(UserData)
+    user_id = models.ForeignKey(AUTH_USER)
     client_secret = models.CharField(max_length=30)
     #client_permit = models.IntegerField(null=True, blank=True)
     client_permit = models.IntegerField()
@@ -35,13 +37,14 @@ class ClientId(models.Model):
 
 
 class Token(models.Model):
-    user_id = models.ForeignKey(UserData)
-    auth_code = models.CharField(max_length=255, db_index=True, unique=True)
+    user_id = models.ForeignKey(AUTH_USER)  # user give client's permit
+    auth_code = models.CharField(max_length=255, db_index=True, unique=True)  # default 300s
     token_code = models.CharField(max_length=255, db_index=True, unique=True)
-    app_id = models.ForeignKey(ClientId)
+    client_id =  models.CharField(max_length=255)
     user_permit = models.IntegerField()
     creat_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(null=True, blank=True)
+    token_expires = models.IntegerField()    # token timeout
 
     class Meta:
         db_table = u'token'
