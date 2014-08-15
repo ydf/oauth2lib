@@ -36,7 +36,6 @@ class Auth2(AuthorizationProvider):
         # Return True or False
         client = ClientId.objects.filter(client_id=client_id)
         print type(redirect_uri)
-        print client.values()[0]['redirect_uri']
         if client is not None and client.values()[0]['redirect_uri'] == redirect_uri:
             return True
         return False
@@ -44,7 +43,7 @@ class Auth2(AuthorizationProvider):
     def validate_access(self):  # Use this to validate your app session user
         # Return True or False
         # test for default True
-        return True
+        return True  # at django, it's has validate user.
 
     def from_authorization_code(self, client_id, code, scope):
         # Return mixed data or None on invalid
@@ -58,8 +57,11 @@ class Auth2(AuthorizationProvider):
         # Return value ignored
         if scope is '':
             scope = 2
-        auth_code = Token(
-            client_id=client_id, auth_code=code, user_permit=scope, user_id=self.user, token_expires=30)
+        auth_code = Token(client_id=client_id,
+                          auth_code=code,
+                          user_permit=scope,
+                          user_id=self.user,
+                          token_expires=30)
         auth_code.save()
         # u can use this:Token.objects.create(client_id=client_id, code=code,
         # user_permit=scope)
@@ -69,10 +71,13 @@ class Auth2(AuthorizationProvider):
                                   token_type, expires_in, refresh_token,
                                   data):
         # Return value ignored
+        # save token data
         return True
 
     def discard_authorization_code(self, client_id, code):
         # Return value ignored
+        # remove client_id and code
+        Token.objects.filter(auth_code=code).update()
         return True
 
     def discard_refresh_token(self, client_id, refresh_token):
@@ -82,6 +87,6 @@ class Auth2(AuthorizationProvider):
 
 if __name__ == '__main__':
     # print dir(sina_oauth)
-    print sina_oauth.get_authorization_code_uri()  # get auth uri
+    # print sina_oauth.get_authorization_code_uri()  # get auth uri
     # print updata('ceshi  zidong')
-    # print sina_oauth.get_token('b1163ba1cc83793dc2efc684501e9431')
+    print 'ok'

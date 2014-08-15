@@ -1,17 +1,17 @@
 # -*-coding=utf-8-*-
 
 from .oauthprovider import Auth2
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 
 
 def get_auth_code(request):
-    kwargs = request.GET
     if request.user.is_authenticated():  # for test
         auth = Auth2(request.user)  # Auth2(request.user.id)
         uri = request.get_full_path()
         response = auth.get_authorization_code_from_uri(uri)
-        #print  response.headers
-        return HttpResponse(response.status_code)
+        if response.status_code == 302:
+            return HttpResponseRedirect(response.headers['Location'])
+        return HttpResponse('error')
 
 
 def function():
