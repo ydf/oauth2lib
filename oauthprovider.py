@@ -57,7 +57,7 @@ class Auth2(AuthorizationProvider):
             utc_time = client.values()[0]['creat_time'].timetuple()
             time_stamp = int(time.mktime(utc_time))
             if time_stamp > int(time.time()) - 3600:
-                return 'user_permit ok'
+                return {'user_id': client.values()[0]['user_id_id']}
         return None
 
     def from_refresh_token(self, client_id, refresh_token, scope):
@@ -84,11 +84,12 @@ class Auth2(AuthorizationProvider):
         # now don't support refresh token
         if scope is '':
             scope = 2
+
         token_code = Token(client_id=client_id,
                            user_permit=scope,
                            token_code=access_token,
                            token_expires=expires_in,
-                           user_id=self.user,
+                           user_id=data['user_id'],
                            )
         token_code.save()
         return True

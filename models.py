@@ -37,7 +37,7 @@ class ClientId(models.Model):
 
 
 class Token(models.Model):
-    user_id = models.ForeignKey(AUTH_USER)  # user give client's permit
+    user_id = models.IntegerField()  # user give client's permit
     token_code = models.CharField(max_length=255, db_index=True)
     client_id = models.CharField(max_length=255)
     user_permit = models.IntegerField()

@@ -477,7 +477,6 @@ class AuthorizationProvider(Provider):
             return self.get_token(**data)
         except TypeError as exc:
             self._handle_exception(exc)
-            print exc
 
             # Catch missing parameters in request
             return self._make_json_error_response('invalid_request')
