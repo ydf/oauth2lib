@@ -39,7 +39,7 @@ class ClientId(models.Model):
 class Token(models.Model):
     user_id = models.ForeignKey(AUTH_USER)  # user give client's permit
     token_code = models.CharField(max_length=255, db_index=True)
-    client_id =  models.CharField(max_length=255)
+    client_id = models.CharField(max_length=255)
     user_permit = models.IntegerField()
     creat_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(null=True, blank=True)
@@ -48,13 +48,13 @@ class Token(models.Model):
     class Meta:
         db_table = u'token'
 
+
 class AuthCode(models.Model):
     user_id = models.ForeignKey(AUTH_USER)  # user give client's permit
-    auth_code = models.CharField(max_length=255, db_index=True, unique=True)  # default 300s
-    client_id =  models.CharField(max_length=255)
+    auth_code = models.CharField(max_length=255, db_index=True, unique=True)
+    client_id = models.CharField(max_length=255)
     user_permit = models.IntegerField()
     creat_time = models.DateTimeField(auto_now_add=True)
 
-
     class Meta:
-        db_table = u'authcode'
+        db_table = u'auth_code'

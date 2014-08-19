@@ -13,9 +13,9 @@ from oauth2lib.client import Client
 
 client_id = '123'
 client_secret = '123'
-redirect_uri = 'http://qq.com/callback'
+redirect_uri = 'http://www.linux.com/callback'
 authorization_uri = 'http://127.0.0.1:8000/authorize'
-token_uri = 'https://api.weibo.com/oauth2/access_token'
+token_uri = 'http://127.0.0.1:8000/access_token'
 
 sina_oauth = Client(client_id, client_secret,
                     redirect_uri, authorization_uri, token_uri)
@@ -50,3 +50,4 @@ if __name__ == '__main__':
     print sina_oauth.get_authorization_code_uri()  # get auth uri
    # print updata('ceshi  zidong')
     # print sina_oauth.get_token('b1163ba1cc83793dc2efc684501e9431')
+    print sina_oauth.get_token('BkH1tNm9rre40ocOPdQrRncKRQzWVePFfLzAfefw')

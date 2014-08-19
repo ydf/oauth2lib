@@ -42,7 +42,7 @@ class Client(object):
         :type data: str
         :rtype: requests.Response
         """
-        if not url.startswith('https://'):
+        if not url.startswith('http://'):
             raise ValueError('Protocol must be HTTPS, invalid URL: %s' % url)
         return requests.post(url, data, verify=True)
 
@@ -74,6 +74,7 @@ class Client(object):
                        'client_secret': self.client_secret,
                        'redirect_uri': self.redirect_uri})
         response = self.http_post(self.token_uri, params)
+        print response.content
         try:
             return response.json()
         except TypeError:
